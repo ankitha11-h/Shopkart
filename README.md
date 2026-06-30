@@ -1,16 +1,116 @@
-# React + Vite
+# 🛒 ShopKart
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ShopKart is a modern e-commerce web application built using React.js, JavaScript, HTML, and CSS.
 
-Currently, two official plugins are available:
+The goal of this project is to build a responsive shopping platform with reusable React components and practical frontend development concepts.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
+## 🚀 Project Overview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+ShopKart is planned as an e-commerce application where users can browse products, view product details, and manage items through a shopping cart.
 
-## Expanding the ESLint configuration
+This project is being developed to practice:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React component architecture
+- State management
+- Props
+- Event handling
+- Responsive UI design
+- Git and GitHub workflow
+
+
+## 🛠️ Technologies Used
+
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- React.js
+- Vite
+
+Development Tools:
+
+- Git
+- GitHub
+
+
+## ✨ Planned Features
+
+### User Interface
+- Responsive navigation bar
+- Homepage design
+- Product listing page
+- Product detail page
+
+### Shopping Features
+- Display products
+- Add products to cart
+- Remove products from cart
+- Update product quantity
+- Calculate total price
+
+### Future Improvements
+
+- User authentication
+- Search and filter products
+- Wishlist feature
+- Payment integration
+- Backend API integration
+
+
+## 📂 Project Structure
+
+```text
+ShopKart
+│
+├── src
+│   │
+│   ├── components
+│   │   └── Reusable React components
+│   │
+│   ├── pages
+│   │   └── Application pages
+│   │
+│   ├── data
+│   │   └── Product data
+│   │
+│   ├── assets
+│   │   └── Images and resources
+│   │
+│   ├── App.jsx
+│   └── main.jsx
+│
+├── public
+│
+└── README.md
+```
+
+
+## ⚙️ Installation
+
+Clone the repository:
+
+```bash
+git clone <https://github.com/ankitha11-h/Shopkart.git>
+```
+
+Go into the project:
+
+```bash
+cd ShopKart
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the application:
+
+```bash
+npm run dev
+```
+
+
+
+
