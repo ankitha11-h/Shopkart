@@ -90,7 +90,7 @@ ShopKart
 Clone the repository:
 
 ```bash
-git clone <https://github.com/ankitha11-h/Shopkart.git>
+git clone https://github.com/yourusername/Shopkart.git
 ```
 
 Go into the project:
@@ -110,7 +110,3 @@ Run the application:
 ```bash
 npm run dev
 ```
-
-
-
-
