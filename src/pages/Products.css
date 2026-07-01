@@ -1,0 +1,19 @@
+.products-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.products-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #333333;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
