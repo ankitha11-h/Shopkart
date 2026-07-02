@@ -2,7 +2,7 @@ import { useCart } from '../context/CartContext';
 import './Cart.css';
 
 const Cart = () => {
-  const { cartItems } = useCart();
+  const { cartItems, removeFromCart } = useCart();
 
   const groupedCartItems = cartItems.reduce((acc, item) => {
     const found = acc.find((i) => i.id === item.id);
@@ -32,6 +32,13 @@ const Cart = () => {
                   <p className="cart-item-price">₹{item.price.toFixed(2)}</p>
                   <p className="cart-item-quantity">Quantity: {item.quantity}</p>
                 </div>
+                <button
+                  type="button"
+                  className="cart-item-remove-btn"
+                  onClick={() => removeFromCart(item.id)}
+                >
+                  Remove
+                </button>
               </div>
             ))}
           </div>

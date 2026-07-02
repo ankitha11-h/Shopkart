@@ -79,3 +79,20 @@
   color: #666666;
   margin: 0;
 }
+
+.cart-item-remove-btn {
+  margin-left: auto;
+  background-color: #dc3545;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.cart-item-remove-btn:hover {
+  background-color: #bd2130;
+}
