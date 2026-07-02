@@ -13,8 +13,38 @@ export const CartProvider = ({ children }) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== productId));
   };
 
+  const increaseQuantity = (productId) => {
+    setCartItems((prevItems) => {
+      const product = prevItems.find((item) => item.id === productId);
+      if (product) {
+        return [...prevItems, product];
+      }
+      return prevItems;
+    });
+  };
+
+  const decreaseQuantity = (productId) => {
+    setCartItems((prevItems) => {
+      const index = prevItems.findIndex((item) => item.id === productId);
+      if (index !== -1) {
+        const newItems = [...prevItems];
+        newItems.splice(index, 1);
+        return newItems;
+      }
+      return prevItems;
+    });
+  };
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        increaseQuantity,
+        decreaseQuantity,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

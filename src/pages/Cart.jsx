@@ -2,7 +2,7 @@ import { useCart } from '../context/CartContext';
 import './Cart.css';
 
 const Cart = () => {
-  const { cartItems, removeFromCart } = useCart();
+  const { cartItems, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
 
   const groupedCartItems = cartItems.reduce((acc, item) => {
     const found = acc.find((i) => i.id === item.id);
@@ -30,7 +30,26 @@ const Cart = () => {
                 <div className="cart-item-details">
                   <h3 className="cart-item-title">{item.title}</h3>
                   <p className="cart-item-price">₹{item.price.toFixed(2)}</p>
-                  <p className="cart-item-quantity">Quantity: {item.quantity}</p>
+                  <div className="cart-item-quantity-controls">
+                    <span className="quantity-label">Quantity: </span>
+                    <button
+                      type="button"
+                      className="quantity-btn decrease-btn"
+                      onClick={() => decreaseQuantity(item.id)}
+                      aria-label="Decrease quantity"
+                    >
+                      −
+                    </button>
+                    <span className="quantity-value">{item.quantity}</span>
+                    <button
+                      type="button"
+                      className="quantity-btn increase-btn"
+                      onClick={() => increaseQuantity(item.id)}
+                      aria-label="Increase quantity"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
                 <button
                   type="button"
