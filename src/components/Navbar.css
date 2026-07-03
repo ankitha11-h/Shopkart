@@ -33,7 +33,8 @@
   color: #007bff;
 }
 
-.navbar-cart-count {
+.navbar-cart-count,
+.navbar-wishlist-count {
   color: #007bff;
   font-weight: 700;
   font-size: 0.95rem;
