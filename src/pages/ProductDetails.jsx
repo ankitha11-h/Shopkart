@@ -1,11 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
 import { productsData } from '../data/ProductsData';
 import './ProductDetails.css';
 
 const ProductDetails = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
+  const { toggleWishlist, isWishlisted } = useWishlist();
 
   const product = productsData.find((p) => p.id === Number(id));
 
@@ -24,6 +26,14 @@ const ProductDetails = () => {
       <div className="product-details-content">
         <div className="product-details-image-section">
           <img src={image} alt={title} className="product-details-image" />
+          <button
+            className="wishlist-btn-details"
+            type="button"
+            onClick={() => toggleWishlist(product)}
+            aria-label={isWishlisted(product.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
+          >
+            {isWishlisted(product.id) ? '❤️' : '♡'}
+          </button>
         </div>
         <div className="product-details-info-section">
           <span className="product-details-category">{category}</span>

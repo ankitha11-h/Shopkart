@@ -18,9 +18,11 @@ const Products = () => {
 
   // PREPARATION FOR WISHLIST FEATURE (Next step)
   // State to store IDs of wishlisted products
+  // eslint-disable-next-line no-unused-vars
   const [wishlist, setWishlist] = useState([]);
 
   // Placeholder function for toggling wishlist items
+  // eslint-disable-next-line no-unused-vars
   const toggleWishlist = (productId) => {
     // In the future:
     // setWishlist((prevWishlist) =>
