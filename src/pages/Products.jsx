@@ -13,9 +13,22 @@ const Products = () => {
   // Extract unique categories from productsData
   const categories = ['All', ...new Set(productsData.map((product) => product.category))];
 
-  // PREPARATION FOR PRICE SORTING (Next step)
   // State for sort order: '' (default/none), 'price-asc' (low-to-high), 'price-desc' (high-to-low)
   const [sortBy, setSortBy] = useState('');
+
+  // PREPARATION FOR WISHLIST FEATURE (Next step)
+  // State to store IDs of wishlisted products
+  const [wishlist, setWishlist] = useState([]);
+
+  // Placeholder function for toggling wishlist items
+  const toggleWishlist = (productId) => {
+    // In the future:
+    // setWishlist((prevWishlist) =>
+    //   prevWishlist.includes(productId)
+    //     ? prevWishlist.filter((id) => id !== productId)
+    //     : [...prevWishlist, productId]
+    // );
+  };
 
   // Filter products by both title (case-insensitive) and selected category
   const filteredProducts = productsData.filter((product) => {
@@ -24,13 +37,12 @@ const Products = () => {
     return matchesSearch && matchesCategory;
   });
 
-  // (Note: in the future, sort the filtered products before rendering:
-  // const sortedProducts = [...filteredProducts].sort((a, b) => {
-  //   if (sortBy === 'price-asc') return a.price - b.price;
-  //   if (sortBy === 'price-desc') return b.price - a.price;
-  //   return 0;
-  // });
-  // )
+  // Sort the filtered products before rendering
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (sortBy === 'price-asc') return a.price - b.price;
+    if (sortBy === 'price-desc') return b.price - a.price;
+    return 0; // default sorting order (original order in productsData)
+  });
 
   return (
     <div className="products-page">
@@ -49,21 +61,35 @@ const Products = () => {
         ))}
       </div>
 
-      {/* Search Bar Container */}
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search products by title..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-input"
-        />
+      {/* Search & Sort Controls Container */}
+      <div className="controls-container">
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search products by title..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+        </div>
+
+        <div className="sort-container">
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="sort-select"
+          >
+            <option value="">Default Sorting</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+          </select>
+        </div>
       </div>
 
       {/* Products Grid or Empty State Message */}
-      {filteredProducts.length > 0 ? (
+      {sortedProducts.length > 0 ? (
         <div className="products-grid">
-          {filteredProducts.map((product) => (
+          {sortedProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
