@@ -17,3 +17,44 @@
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
 }
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  outline: none;
+  background-color: #ffffff;
+  color: #333333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+}
+
+.search-input::placeholder {
+  color: #888888;
+}
+
+.no-products {
+  text-align: center;
+  padding: 3rem 1rem;
+  font-size: 1.2rem;
+  color: #666666;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px dashed #dddddd;
+  margin-top: 1rem;
+}
