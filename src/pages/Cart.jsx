@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import './Cart.css';
 
@@ -89,9 +90,9 @@ const Cart = () => {
                 <span>₹{grandTotal.toFixed(2)}</span>
               </div>
             </div>
-            <button type="button" className="proceed-checkout-btn">
+            <Link to="/checkout" className="proceed-checkout-btn">
               Proceed to Checkout
-            </button>
+            </Link>
           </div>
         </div>
       )}
