@@ -12,7 +12,7 @@ const Products = () => {
   const [sortBy, setSortBy] = useState('');
 
   const [currentPage, setCurrentPage] = useState(1);
-  const PRODUCTS_PER_PAGE = 4;
+  const PRODUCTS_PER_PAGE = 6;
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -97,7 +97,7 @@ const Products = () => {
 
       {isLoading ? (
         <div className="products-grid">
-          {Array.from({ length: 4 }).map((_, idx) => (
+          {Array.from({ length: 6 }).map((_, idx) => (
             <SkeletonCard key={idx} />
           ))}
         </div>
