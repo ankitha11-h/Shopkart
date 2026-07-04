@@ -219,6 +219,8 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
   text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
 }
 
 .proceed-checkout-btn:hover {
