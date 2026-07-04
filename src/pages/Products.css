@@ -69,8 +69,11 @@
 
 .search-input {
   width: 100%;
-  padding: 0.8rem 1.2rem;
+  height: 50px;
+  box-sizing: border-box;
+  padding: 0 1.2rem;
   font-size: 1rem;
+  font-family: inherit;
   border: 1px solid var(--border);
   border-radius: 8px;
   outline: none;
@@ -95,13 +98,17 @@
 }
 
 .sort-select {
-  padding: 0.8rem 1.2rem;
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+  padding: 0 1.2rem;
   font-size: 1rem;
+  font-family: inherit;
   border: 1px solid var(--border);
   border-radius: 8px;
   outline: none;
   background-color: var(--input-bg);
-  color: var(--text-h);
+  color: var(--text);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   transition: all 0.3s ease;
