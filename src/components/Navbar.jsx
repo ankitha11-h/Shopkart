@@ -20,8 +20,29 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <Link to="/" onClick={closeMenu}>ShopKart</Link>
+        <Link to="/" onClick={closeMenu}>
+          <span className="desktop-only-logo-emoji">🛒</span>ShopKart
+        </Link>
       </div>
+
+      <ul className={`navbar-links ${isOpen ? 'mobile-open' : ''}`}>
+        <li>
+          <Link to="/" onClick={closeMenu}>Home</Link>
+        </li>
+        <li>
+          <Link to="/products" onClick={closeMenu}>Products</Link>
+        </li>
+        <li>
+          <Link to="/wishlist" onClick={closeMenu}>
+            Wishlist{totalWishlistItems > 0 && <span className="navbar-wishlist-count"> ({totalWishlistItems})</span>}
+          </Link>
+        </li>
+        <li>
+          <Link to="/cart" onClick={closeMenu}>
+            Cart{totalCartItems > 0 && <span className="navbar-cart-count"> ({totalCartItems})</span>}
+          </Link>
+        </li>
+      </ul>
 
       <div className="navbar-right">
         {/* Theme Toggle Button (Always visible) */}
@@ -47,25 +68,6 @@ const Navbar = () => {
           <span className="hamburger-bar"></span>
         </button>
       </div>
-
-      <ul className={`navbar-links ${isOpen ? 'mobile-open' : ''}`}>
-        <li>
-          <Link to="/" onClick={closeMenu}>Home</Link>
-        </li>
-        <li>
-          <Link to="/products" onClick={closeMenu}>Products</Link>
-        </li>
-        <li>
-          <Link to="/wishlist" onClick={closeMenu}>
-            Wishlist{totalWishlistItems > 0 && <span className="navbar-wishlist-count"> ({totalWishlistItems})</span>}
-          </Link>
-        </li>
-        <li>
-          <Link to="/cart" onClick={closeMenu}>
-            Cart{totalCartItems > 0 && <span className="navbar-cart-count"> ({totalCartItems})</span>}
-          </Link>
-        </li>
-      </ul>
     </nav>
   );
 };
