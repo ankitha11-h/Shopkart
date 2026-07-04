@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { productsData } from '../data/ProductsData';
 import ProductCard from '../components/ProductCard';
+import SkeletonCard from '../components/SkeletonCard';
 import './Products.css';
 
 const Products = () => {
@@ -12,6 +13,16 @@ const Products = () => {
   // State for frontend pagination
   const [currentPage, setCurrentPage] = useState(1);
   const PRODUCTS_PER_PAGE = 4;
+
+  // State for simulated API loading
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredProducts = productsData.filter((product) => {
     const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase());
@@ -81,7 +92,13 @@ const Products = () => {
         </div>
       </div>
 
-      {displayedProducts.length > 0 ? (
+      {isLoading ? (
+        <div className="products-grid">
+          {Array.from({ length: 4 }).map((_, idx) => (
+            <SkeletonCard key={idx} />
+          ))}
+        </div>
+      ) : displayedProducts.length > 0 ? (
         <>
           <div className="products-grid">
             {displayedProducts.map((product) => (
