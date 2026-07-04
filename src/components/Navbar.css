@@ -6,6 +6,8 @@
   background-color: var(--nav-bg);
   box-shadow: var(--card-shadow);
   border-bottom: 1px solid var(--border);
+  position: relative;
+  z-index: 1000;
 }
 
 .navbar-logo a {
@@ -13,6 +15,12 @@
   font-weight: bold;
   text-decoration: none;
   color: var(--text-h);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .navbar-links {
@@ -53,8 +61,88 @@
   justify-content: center;
   transition: transform 0.2s ease;
   outline: none;
+  color: var(--text-h);
 }
 
 .theme-toggle-btn:hover {
   transform: scale(1.2);
+}
+
+/* Hamburger button (Mobile only) */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+}
+
+.hamburger-bar {
+  width: 100%;
+  height: 2px;
+  background-color: var(--text-h);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Animate hamburger to X when open */
+.hamburger-btn.open .hamburger-bar:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-btn.open .hamburger-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-btn.open .hamburger-bar:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .navbar-links {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--nav-bg);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--card-shadow);
+    padding: 0;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+    z-index: 999;
+  }
+
+  .navbar-links.mobile-open {
+    max-height: 300px;
+  }
+
+  .navbar-links li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar-links li a {
+    display: block;
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .navbar-links li a:hover {
+    background-color: var(--empty-bg);
+  }
 }
