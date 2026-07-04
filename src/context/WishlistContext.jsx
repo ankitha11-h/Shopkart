@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const WishlistContext = createContext();
 
@@ -17,25 +18,30 @@ export const WishlistProvider = ({ children }) => {
   };
 
   const addToWishlist = (product) => {
-    setWishlistItems((prevItems) => {
-      if (prevItems.some((item) => item.id === product.id)) {
-        return prevItems;
-      }
-      return [...prevItems, product];
-    });
+    const isAlreadyInWishlist = wishlistItems.some((item) => item.id === product.id);
+    if (!isAlreadyInWishlist) {
+      setWishlistItems((prevItems) => [...prevItems, product]);
+      toast.success(`${product.title} added to wishlist!`);
+    }
   };
 
   const removeFromWishlist = (productId) => {
+    const item = wishlistItems.find((item) => item.id === productId);
     setWishlistItems((prevItems) => prevItems.filter((item) => item.id !== productId));
+    if (item) {
+      toast.info(`${item.title} removed from wishlist`);
+    }
   };
 
   const toggleWishlist = (product) => {
-    setWishlistItems((prevItems) => {
-      if (prevItems.some((item) => item.id === product.id)) {
-        return prevItems.filter((item) => item.id !== product.id);
-      }
-      return [...prevItems, product];
-    });
+    const isAlreadyInWishlist = wishlistItems.some((item) => item.id === product.id);
+    if (isAlreadyInWishlist) {
+      setWishlistItems((prevItems) => prevItems.filter((item) => item.id !== product.id));
+      toast.info(`${product.title} removed from wishlist`);
+    } else {
+      setWishlistItems((prevItems) => [...prevItems, product]);
+      toast.success(`${product.title} added to wishlist!`);
+    }
   };
 
   return (

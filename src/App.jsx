@@ -7,6 +7,8 @@ import Products from './pages/Products';
 import Cart from './pages/Cart';
 import ProductDetails from './pages/ProductDetails';
 import Wishlist from './pages/Wishlist';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/product/:id" element={<ProductDetails />} />
           </Routes>
+          <ToastContainer position="bottom-right" autoClose={3000} />
         </BrowserRouter>
       </WishlistProvider>
     </CartProvider>
