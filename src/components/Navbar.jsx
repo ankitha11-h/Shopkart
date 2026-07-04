@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
+import { useTheme } from '../context/ThemeContext';
 import './Navbar.css';
 
 const Navbar = () => {
   const { cartItems } = useCart();
   const { wishlistItems } = useWishlist();
+  const { theme, toggleTheme } = useTheme();
   const totalCartItems = cartItems.length;
   const totalWishlistItems = wishlistItems.length;
 
@@ -30,6 +32,16 @@ const Navbar = () => {
           <Link to="/cart">
             Cart{totalCartItems > 0 && <span className="navbar-cart-count"> ({totalCartItems})</span>}
           </Link>
+        </li>
+        <li>
+          <button
+            onClick={toggleTheme}
+            className="theme-toggle-btn"
+            type="button"
+            aria-label="Toggle Theme"
+          >
+            {theme === 'light' ? '🌙' : '☀️'}
+          </button>
         </li>
       </ul>
     </nav>
