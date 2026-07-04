@@ -5,16 +5,15 @@ import SkeletonCard from '../components/SkeletonCard';
 import './Products.css';
 
 const Products = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchInput, setSearchInput] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const categories = ['All', ...new Set(productsData.map((product) => product.category))];
   const [sortBy, setSortBy] = useState('');
 
-  // State for frontend pagination
   const [currentPage, setCurrentPage] = useState(1);
   const PRODUCTS_PER_PAGE = 4;
 
-  // State for simulated API loading
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -24,8 +23,17 @@ const Products = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchInput);
+      setCurrentPage(1);
+    }, 500);
+
+    return () => clearTimeout(handler);
+  }, [searchInput]);
+
   const filteredProducts = productsData.filter((product) => {
-    const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = product.title.toLowerCase().includes(debouncedSearch.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
@@ -36,10 +44,8 @@ const Products = () => {
     return 0;
   });
 
-  // Calculate total pages
   const totalPages = Math.ceil(sortedProducts.length / PRODUCTS_PER_PAGE);
 
-  // Slice products for current page
   const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
   const displayedProducts = sortedProducts.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
 
@@ -67,11 +73,8 @@ const Products = () => {
           <input
             type="text"
             placeholder="Search products by title..."
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              setCurrentPage(1);
-            }}
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
             className="search-input"
           />
         </div>
@@ -106,7 +109,6 @@ const Products = () => {
             ))}
           </div>
 
-          {/* Frontend Pagination Controls */}
           {totalPages > 1 && (
             <div className="pagination-container">
               <button
