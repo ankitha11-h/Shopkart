@@ -19,7 +19,7 @@ const Checkout = () => {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [countdown, setCountdown] = useState(5);
+  const [countdown, setCountdown] = useState(10);
 
   // Group cart items to display in Order Summary
   const groupedCartItems = cartItems.reduce((acc, item) => {
