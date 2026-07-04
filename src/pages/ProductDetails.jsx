@@ -1,7 +1,9 @@
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { productsData } from '../data/ProductsData';
+import ProductCard from '../components/ProductCard';
 import './ProductDetails.css';
 
 const ProductDetails = () => {
@@ -9,7 +11,20 @@ const ProductDetails = () => {
   const { addToCart } = useCart();
   const { toggleWishlist, isWishlisted } = useWishlist();
 
+  const [recentProducts, setRecentProducts] = useState([]);
+
   const product = productsData.find((p) => p.id === Number(id));
+
+  useEffect(() => {
+    if (product) {
+      const savedList = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+      const filteredList = savedList.filter((item) => item.id !== product.id);
+      const newList = [product, ...filteredList].slice(0, 4);
+      localStorage.setItem('recentlyViewed', JSON.stringify(newList));
+
+      setRecentProducts(newList.filter((item) => item.id !== product.id));
+    }
+  }, [product]);
 
   if (!product) {
     return (
@@ -49,6 +64,18 @@ const ProductDetails = () => {
           </button>
         </div>
       </div>
+
+      {/* Recently Viewed Products Section */}
+      {recentProducts.length > 0 && (
+        <div className="recently-viewed-section">
+          <h2 className="recently-viewed-title">Recently Viewed Products</h2>
+          <div className="recently-viewed-grid">
+            {recentProducts.map((recentProduct) => (
+              <ProductCard key={recentProduct.id} product={recentProduct} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
