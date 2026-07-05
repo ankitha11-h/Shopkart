@@ -4,6 +4,8 @@ ShopKart is a modern, responsive, and fully featured single-page e-commerce web 
 
 It demonstrates component architecture, global state management using React Context API, local storage data persistence, custom hooks, debouncing, pagination, and clean responsive user interface designs.
 
+🔗 **Live Demo**: [https://shopkart-omega-seven.vercel.app/](https://shopkart-omega-seven.vercel.app/)
+
 ---
 
 ## ✨ Features
