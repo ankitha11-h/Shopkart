@@ -1,39 +1,103 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { productsData } from '../data/ProductsData';
 import ProductCard from '../components/ProductCard';
 import SkeletonCard from '../components/SkeletonCard';
 import './Products.css';
 
 const Products = () => {
-  const [searchInput, setSearchInput] = useState('');
-  const [debouncedSearch, setDebouncedSearch] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const searchParam = searchParams.get('search') || '';
+  const categoryParam = searchParams.get('category') || 'All';
+  const sortParam = searchParams.get('sort') || '';
+  const pageParam = parseInt(searchParams.get('page') || '1', 10);
+
+  const [searchInput, setSearchInput] = useState(searchParam);
+  const [debouncedSearch, setDebouncedSearch] = useState(searchParam);
+  const [selectedCategory, setSelectedCategory] = useState(categoryParam);
+  const [sortBy, setSortBy] = useState(sortParam);
+  const [currentPage, setCurrentPage] = useState(pageParam);
+
   const categories = ['All', ...new Set(productsData.map((product) => product.category))];
-  const [sortBy, setSortBy] = useState('');
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const PRODUCTS_PER_PAGE = 6;
-
+  const PRODUCTS_PER_PAGE = 20;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
+    setSelectedCategory(categoryParam);
+    setCurrentPage(pageParam);
+  }, [categoryParam, pageParam]);
+
+  useEffect(() => {
+    setSearchInput(searchParam);
+    setDebouncedSearch(searchParam);
+  }, [searchParam]);
 
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(searchInput);
-      setCurrentPage(1);
-    }, 500);
+
+      const newParams = new URLSearchParams(searchParams);
+      if (searchInput.trim()) {
+        newParams.set('search', searchInput.trim());
+      } else {
+        newParams.delete('search');
+      }
+      newParams.set('page', '1');
+      setSearchParams(newParams);
+    }, 400);
 
     return () => clearTimeout(handler);
   }, [searchInput]);
 
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+
+    const newParams = new URLSearchParams(searchParams);
+    if (category === 'All') {
+      newParams.delete('category');
+    } else {
+      newParams.set('category', category);
+    }
+    newParams.set('page', '1'); // Reset page
+    setSearchParams(newParams);
+  };
+
+  const handleSortChange = (sortVal) => {
+    setSortBy(sortVal);
+    setCurrentPage(1);
+
+    const newParams = new URLSearchParams(searchParams);
+    if (sortVal) {
+      newParams.set('sort', sortVal);
+    } else {
+      newParams.delete('sort');
+    }
+    newParams.set('page', '1');
+    setSearchParams(newParams);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('page', String(page));
+    setSearchParams(newParams);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, [selectedCategory, debouncedSearch, sortBy]);
+
   const filteredProducts = productsData.filter((product) => {
-    const matchesSearch = product.title.toLowerCase().includes(debouncedSearch.toLowerCase());
+    const matchesSearch = product.title.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+      product.description.toLowerCase().includes(debouncedSearch.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
@@ -45,22 +109,18 @@ const Products = () => {
   });
 
   const totalPages = Math.ceil(sortedProducts.length / PRODUCTS_PER_PAGE);
-
   const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
   const displayedProducts = sortedProducts.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
 
   return (
-    <div className="products-page">
+    <div className="products-page container">
       <h1 className="products-title">Our Products</h1>
 
       <div className="categories-container">
         {categories.map((category) => (
           <button
             key={category}
-            onClick={() => {
-              setSelectedCategory(category);
-              setCurrentPage(1);
-            }}
+            onClick={() => handleCategoryChange(category)}
             className={`category-btn ${selectedCategory === category ? 'active' : ''}`}
           >
             {category}
@@ -82,10 +142,7 @@ const Products = () => {
         <div className="sort-container">
           <select
             value={sortBy}
-            onChange={(e) => {
-              setSortBy(e.target.value);
-              setCurrentPage(1);
-            }}
+            onChange={(e) => handleSortChange(e.target.value)}
             className="sort-select"
           >
             <option value="">Default Sorting</option>
@@ -114,7 +171,7 @@ const Products = () => {
               <button
                 type="button"
                 className="pagination-btn prev-btn"
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
                 disabled={currentPage === 1}
               >
                 Previous
@@ -126,7 +183,7 @@ const Products = () => {
                     key={page}
                     type="button"
                     className={`pagination-page-btn ${currentPage === page ? 'active' : ''}`}
-                    onClick={() => setCurrentPage(page)}
+                    onClick={() => handlePageChange(page)}
                   >
                     {page}
                   </button>
@@ -136,7 +193,7 @@ const Products = () => {
               <button
                 type="button"
                 className="pagination-btn next-btn"
-                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
                 disabled={currentPage === totalPages}
               >
                 Next
@@ -146,7 +203,7 @@ const Products = () => {
         </>
       ) : (
         <div className="no-products">
-          <p>No products found.</p>
+          <p>No products found matching your criteria.</p>
         </div>
       )}
     </div>

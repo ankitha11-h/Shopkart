@@ -65,7 +65,6 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* Recently Viewed Products Section */}
       {recentProducts.length > 0 && (
         <div className="recently-viewed-section">
           <h2 className="recently-viewed-title">Recently Viewed Products</h2>

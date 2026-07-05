@@ -21,7 +21,6 @@ const Checkout = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [countdown, setCountdown] = useState(10);
 
-  // Group cart items to display in Order Summary
   const groupedCartItems = cartItems.reduce((acc, item) => {
     const found = acc.find((i) => i.id === item.id);
     if (found) {
@@ -37,7 +36,6 @@ const Checkout = () => {
   const deliveryCharge = 0;
   const grandTotal = subtotal + deliveryCharge;
 
-  // Handle countdown and redirect on success
   useEffect(() => {
     let timer;
     if (isSubmitted) {
@@ -66,14 +64,12 @@ const Checkout = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Custom Validation Check
     const emptyFields = Object.keys(formData).filter((key) => !formData[key].trim());
     if (emptyFields.length > 0) {
       toast.error('Please fill in all shipping fields.');
       return;
     }
 
-    // Success flow
     clearCart();
     setIsSubmitted(true);
     toast.success('Order placed successfully!');
